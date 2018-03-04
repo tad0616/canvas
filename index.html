@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- this, preferably, goes inside head element: -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="libs/flashcanvas.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="signature"></div>
+    <button type='button' id="clear">清除</button>
+    <button type='button' id="save">儲存</button>
+    <!-- you load jquery somewhere before jSignature ... -->
+    <script src="libs/jquery.js"></script>
+    <script src="libs/jSignature.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#signature").jSignature({color:"#00f",lineWidth:5});
+            $('#save').click(function(){
+                $.post('save.php', { sig: $("#signature").jSignature('getData', 'image')},
+                function(sn) {
+                    location.href='show.php?sn=' + sn;
+                });
+            });
+            $('#clear').click(function(){
+                $("#signature").jSignature('clear');
+            });
+        })
+    </script>
+</body>
+
+</html>
